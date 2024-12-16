@@ -1,0 +1,122 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserProfileEntity {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  national_code: String!
+  mobile_number: String!
+  email: String!
+  first_name: String!
+  last_name: String!
+  birth_date: DateTime!
+  gender: String!
+  active_status: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserProfilesEntity implements PaginationResponse {
+  totalCount: Int!
+  totalPage: Int!
+  limit: Int!
+  page: Int!
+  count: Int!
+  sortBy: String
+  orderBy: String
+  profiles: [UserProfileEntity]!
+}
+
+interface PaginationResponse {
+  totalCount: Int!
+  totalPage: Int!
+  limit: Int!
+  page: Int!
+  count: Int!
+  sortBy: String
+  orderBy: String
+}
+
+type CreateUserProfileResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: UserProfileEntity
+}
+
+interface BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+}
+
+type FindAllUserProfilesResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: UserProfilesEntity
+}
+
+type FindOneUserProfileResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: UserProfileEntity
+}
+
+type UpdateUserProfileResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: UserProfileEntity
+}
+
+type Query {
+  findAllUserProfiles(dto: FindAllUserProfilesInput!): FindAllUserProfilesResponse!
+  findOneUserProfile(dto: FindOneUserProfileInput!): FindOneUserProfileResponse!
+}
+
+input FindAllUserProfilesInput {
+  exampleField: Int!
+}
+
+input FindOneUserProfileInput {
+  id: Int!
+}
+
+type Mutation {
+  createUserProfile(dto: CreateProfileInput!): CreateUserProfileResponse!
+  updateUserProfile(dto: UpdateUserProfileInput!): UpdateUserProfileResponse!
+}
+
+input CreateProfileInput {
+  nationalCode: String!
+  mobileNumber: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  birthDate: DateTime!
+  gender: String!
+}
+
+input UpdateUserProfileInput {
+  id: Int
+  firstName: String
+  lastName: String
+  birthDate: DateTime
+}
