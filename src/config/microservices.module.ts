@@ -2,7 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
 import { USER_SVC_NAME } from '../common/constants/microservices-name.constant';
 import { ConfigService } from '@nestjs/config';
-import { USER_SVC_PORT_ENV } from '../common/constants/invorinments-name.constant';
+import { USER_SVC_PORT_ENV } from '../common/constants/environments-name.constant';
 import { USER_SVC_CLIENT_PROXY_NAME } from '../common/constants/microservices-client-name.constant';
 
 @Global()

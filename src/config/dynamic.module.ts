@@ -30,9 +30,9 @@ export const dynamicModules = [
                     statusCode: formattedError.extensions?.statusCode || 500,
                     code: formattedError.extensions?.code || '',
                     field: formattedError.extensions?.field || '',
-                    message: formattedError.extensions?.message || 'request failed...try again later',
+                    message: formattedError.extensions?.message || formattedError.message || 'request failed...try again later',
                 },
-                message: String(formattedError?.extensions?.message || 'request failed...try again later'),
+                message: String(formattedError?.extensions?.message || formattedError.message || 'request failed...try again later'),
             };
         },
         path: '/',
