@@ -1,1 +1,2 @@
 export const USER_SVC_NAME = 'USER_SVC';
+export const BUSINESS_SVC_NAME = 'BUSINESS_SVC_NAME';
