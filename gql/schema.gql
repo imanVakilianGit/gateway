@@ -2,6 +2,84 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type OptionsTemplate {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title: String!
+  business_category_id: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type BusinessCategoryEntity {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title: String!
+  slug: String!
+  description: String
+  options_template: [OptionsTemplate]
+}
+
+type BusinessCategoriesEntity {
+  totalCount: Int!
+  totalPage: Int!
+  limit: Int!
+  page: Int!
+  count: Int!
+  sortBy: String
+  orderBy: String
+  businessCategories: [BusinessCategoryEntity]!
+}
+
+type CreateBusinessCategoryResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: BusinessCategoryEntity
+}
+
+interface BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+}
+
+type FindAllBusinessCategoriesResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: BusinessCategoriesEntity
+}
+
+type FindOneBusinessCategoryResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: BusinessCategoryEntity
+}
+
+type FindOneBusinessCategoryBySlugResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: BusinessCategoryEntity
+}
+
 type UserProfileEntity {
   id: Int!
   created_at: DateTime!
@@ -15,11 +93,6 @@ type UserProfileEntity {
   gender: String!
   active_status: String!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type UserProfilesEntity implements PaginationResponse {
   totalCount: Int!
@@ -49,14 +122,6 @@ type CreateUserProfileResponse implements BaseResponse {
   message: String!
   code: String!
   data: UserProfileEntity
-}
-
-interface BaseResponse {
-  service: String!
-  success: Boolean!
-  statusCode: Int!
-  message: String!
-  code: String!
 }
 
 type FindAllUserProfilesResponse implements BaseResponse {
@@ -113,6 +178,9 @@ type UserLogoutResponse implements BaseResponse {
 type Query {
   findAllUserProfiles(dto: FindAllUserProfilesInput!): FindAllUserProfilesResponse!
   findOneUserProfile(dto: FindOneUserProfileInput!): FindOneUserProfileResponse!
+  findAllBusinessCategories(dto: FindAllBusinessCategoriesInput!): FindAllBusinessCategoriesResponse!
+  findOneBusinessCategory(dto: FindOneBusinessCategoryInput!): FindOneBusinessCategoryResponse!
+  findOneBusinessCategoryBySlug(dto: FindOneBusinessCategoryBySlugInput!): FindOneBusinessCategoryBySlugResponse!
 }
 
 input FindAllUserProfilesInput {
@@ -123,6 +191,22 @@ input FindOneUserProfileInput {
   id: Int!
 }
 
+input FindAllBusinessCategoriesInput {
+  page: Int
+  limit: Int
+  sortBy: String
+  orderBy: String
+  title: String
+}
+
+input FindOneBusinessCategoryInput {
+  id: Int!
+}
+
+input FindOneBusinessCategoryBySlugInput {
+  slug: String!
+}
+
 type Mutation {
   createUserProfile(dto: CreateProfileInput!): CreateUserProfileResponse!
   updateUserProfile(dto: UpdateUserProfileInput!): UpdateUserProfileResponse!
@@ -130,6 +214,7 @@ type Mutation {
   userLoginByEmail(dto: UserLoginByEmailInput!): UserLoginResponse!
   userConfirmLogin(dto: UserConfirmLoginInput!): UserConfirmLoginResponse!
   userLogout: UserLogoutResponse!
+  createBusinessCategory(dto: CreateBusinessCategoryInput!): CreateBusinessCategoryResponse!
 }
 
 input CreateProfileInput {
@@ -160,4 +245,14 @@ input UserLoginByEmailInput {
 input UserConfirmLoginInput {
   otpCode: String!
   receiver: String!
+}
+
+input CreateBusinessCategoryInput {
+  title: String!
+  description: String
+  options: [OptionTemplateInput!]!
+}
+
+input OptionTemplateInput {
+  title: String!
 }
