@@ -8,7 +8,7 @@ import { FindAllBusinessesInput } from '../common/gql-types/dto/business/find-al
 import { FindOneBusinessInput } from '../common/gql-types/dto/business/find-one.input';
 import { FindOneBusinessBySlugInput } from '../common/gql-types/dto/business/find-one-by-slug.input';
 import { UpdateBusinessInput } from '../common/gql-types/dto/business/update.input';
-import { UserAuthGuard } from '../../user-svc/common/guard/auth.guard';
+import { UserAuthGuard } from '../../common/guard/user-auth.guard';
 import {
     CreateBusinessResponse,
     FindAllBusinessesResponse,

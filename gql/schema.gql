@@ -265,6 +265,29 @@ type PromoteEmployeeToManagerResponse implements BaseResponse {
   data: ManagerEntity
 }
 
+type BranchEntity {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  manager_id: Int!
+  name: String!
+  code: String!
+  description: String
+  is_active: Boolean
+  manager: ManagerEntity
+  business: BusinessEntity
+  employees: [EmployeeEntity]
+}
+
+type CreateBranchResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: BranchEntity
+}
+
 type CreateUserProfileResponse implements BaseResponse {
   service: String!
   success: Boolean!
@@ -388,6 +411,7 @@ type Mutation {
   updateBusiness(dto: UpdateBusinessInput!): UpdateBusinessResponse!
   createEmployee(dto: CreateEmployeeInput!): CreateEmployeeResponse!
   promoteEmployeeToManager(dto: PromoteEmployeeToManagerInput!): PromoteEmployeeToManagerResponse!
+  createBranch(dto: CreateBranchInput!): CreateBranchResponse!
 }
 
 input CreateProfileInput {
@@ -471,4 +495,9 @@ input CreateEmployeeInput {
 
 input PromoteEmployeeToManagerInput {
   employeeId: Int!
+}
+
+input CreateBranchInput {
+  name: String!
+  description: String!
 }
