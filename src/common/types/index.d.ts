@@ -4,8 +4,20 @@ declare global {
         interface Request {
             user?: {
                 id: number;
-                firstName: string;
-                lastName: string;
+                first_name: string;
+                last_name: string;
+                [key: string]: any;
+            };
+
+            employee?: {
+                id: number;
+                employee_code: string;
+                business_id: number;
+                [key: string]: any;
+            };
+
+            manager?: {
+                id: number;
                 [key: string]: any;
             };
         }

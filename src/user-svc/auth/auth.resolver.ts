@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { GuestGuard } from '../../common/guard/guest.guard';
 import { UserLoginByMobileInput } from '../common/gql-types/dto/auth/login-by-mobile.input';
 import { UserConfirmLoginInput } from '../common/gql-types/dto/auth/confirm-login.input';
-import { UserAuthGuard } from '../common/guard/auth.guard';
+import { UserAuthGuard } from '../../common/guard/user-auth.guard';
 import { UserLoginTypeEnum } from '../common/enum/login-type.enum';
 import { UserLoginByEmailInput } from '../common/gql-types/dto/auth/login-by-email.input';
 import { UserConfirmLoginResponse, UserLoginResponse, UserLogoutResponse } from '../common/gql-types/response-type/auth.response-type';
