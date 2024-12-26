@@ -17,12 +17,6 @@ export class BranchResolver {
     @Mutation(() => CreateBranchResponse)
     async createBranch(@Args('dto') dto: CreateBranchInput, @Context() { req }: { req: Request }) {
         try {
-            console.log('=================== user ========================');
-            console.log(req.user);
-            console.log('=================== employee ========================');
-            console.log(req.employee);
-            console.log('=================== manager ========================');
-            console.log(req.manager);
             const result = await this.branchService.create({ ...dto, managerId: req.manager?.id, businessId: req.employee?.business_id });
             return result;
         } catch (error) {

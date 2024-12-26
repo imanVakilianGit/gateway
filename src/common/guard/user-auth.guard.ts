@@ -54,10 +54,7 @@ export class UserAuthGuard implements CanActivate {
             req.user = validateAndGetNewTokens.data;
 
             const entities = this.reflector.get(EntityGuard, ctx.getHandler());
-            console.log('=========================');
-            console.log(entities);
             if (entities.employee) {
-                console.log('============ employee =============');
                 const employee = await lastValueFrom(
                     this.businessSvcClient.send('find_one_employee_by_user_id', {
                         userId: req.user!.id,
@@ -70,7 +67,6 @@ export class UserAuthGuard implements CanActivate {
             }
 
             if (entities.manager) {
-                console.log('============ manager =============');
                 const manager = await lastValueFrom(
                     this.businessSvcClient.send('find_one_manager_by_employee_id', {
                         employeeId: req.employee!.id,
