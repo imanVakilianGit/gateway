@@ -222,6 +222,49 @@ interface PaginationResponse {
   orderBy: String
 }
 
+type EmployeeEntity {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  employee_code: String!
+  role: String!
+  salary: String
+  started_at: DateTime!
+  ended_at: DateTime
+  is_active: Boolean
+  user: UserProfileEntity
+  business: BusinessEntity
+}
+
+type ManagerEntity {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  employee_id: Int!
+  is_active: Boolean
+  started_at: DateTime!
+  ended_at: DateTime
+  employee: EmployeeEntity!
+}
+
+type CreateEmployeeResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: EmployeeEntity
+}
+
+type PromoteEmployeeToManagerResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: ManagerEntity
+}
+
 type CreateUserProfileResponse implements BaseResponse {
   service: String!
   success: Boolean!
@@ -343,6 +386,8 @@ type Mutation {
   createBusinessCategory(dto: CreateBusinessCategoryInput!): CreateBusinessCategoryResponse!
   createBusiness(dto: CreateBusinessInput!): CreateBusinessResponse!
   updateBusiness(dto: UpdateBusinessInput!): UpdateBusinessResponse!
+  createEmployee(dto: CreateEmployeeInput!): CreateEmployeeResponse!
+  promoteEmployeeToManager(dto: PromoteEmployeeToManagerInput!): PromoteEmployeeToManagerResponse!
 }
 
 input CreateProfileInput {
@@ -413,4 +458,17 @@ input UpdateBusinessExtraOptionsInput {
   id: Int!
   title: String
   value: String
+}
+
+input CreateEmployeeInput {
+  userId: Int!
+  businessId: Int!
+  branchId: Int
+  sectionId: Int
+  salary: Int
+  role: String!
+}
+
+input PromoteEmployeeToManagerInput {
+  employeeId: Int!
 }
