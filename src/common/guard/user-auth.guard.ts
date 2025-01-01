@@ -1,15 +1,15 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { Request, Response } from 'express';
-import { lastValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { lastValueFrom } from 'rxjs';
+import { Reflector } from '@nestjs/core';
+import { Request, Response } from 'express';
+import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable } from '@nestjs/common';
 
+import { EntityGuard } from '../decorator/entity-guard.decorator';
+import { parseUserAgent } from '../function/parse-user-agent.func';
 import { BUSINESS_SVC_CLIENT_PROXY_NAME, USER_SVC_CLIENT_PROXY_NAME } from '../constants/microservices-client-name.constant';
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from '../cookie/options.cookie';
-import { parseUserAgent } from '../function/parse-user-agent.func';
-import { Reflector } from '@nestjs/core';
-import { EntityGuard } from '../decorator/entity-guard.decorator';
 
 @Injectable()
 export class UserAuthGuard implements CanActivate {
@@ -54,7 +54,7 @@ export class UserAuthGuard implements CanActivate {
             req.user = validateAndGetNewTokens.data;
 
             const entities = this.reflector.get(EntityGuard, ctx.getHandler());
-            if (entities.employee) {
+            if (entities?.employee) {
                 const employee = await lastValueFrom(
                     this.businessSvcClient.send('find_one_employee_by_user_id', {
                         userId: req.user!.id,
@@ -66,7 +66,7 @@ export class UserAuthGuard implements CanActivate {
                 req.employee = employee.data;
             }
 
-            if (entities.manager) {
+            if (entities?.manager) {
                 const manager = await lastValueFrom(
                     this.businessSvcClient.send('find_one_manager_by_employee_id', {
                         employeeId: req.employee!.id,

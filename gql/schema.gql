@@ -247,24 +247,6 @@ type ManagerEntity {
   employee: EmployeeEntity!
 }
 
-type CreateEmployeeResponse implements BaseResponse {
-  service: String!
-  success: Boolean!
-  statusCode: Int!
-  message: String!
-  code: String!
-  data: EmployeeEntity
-}
-
-type PromoteEmployeeToManagerResponse implements BaseResponse {
-  service: String!
-  success: Boolean!
-  statusCode: Int!
-  message: String!
-  code: String!
-  data: ManagerEntity
-}
-
 type BranchEntity {
   id: Int!
   created_at: DateTime!
@@ -286,6 +268,106 @@ type CreateBranchResponse implements BaseResponse {
   message: String!
   code: String!
   data: BranchEntity
+}
+
+type CreateEmployeeResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: EmployeeEntity
+}
+
+type PromoteEmployeeToManagerResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: ManagerEntity
+}
+
+type SectionEntity {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  manager_id: Int
+  business_id: Int!
+  branch_id: Int!
+  name: String!
+  code: String!
+  description: String
+  is_active: Boolean
+  manager: ManagerEntity
+  business: BusinessEntity
+  branch: BranchEntity
+  employees: [EmployeeEntity]
+}
+
+type SectionsEntity {
+  totalCount: Int!
+  totalPage: Int!
+  limit: Int!
+  page: Int!
+  count: Int!
+  sortBy: String
+  orderBy: String
+  sections: [SectionEntity]!
+}
+
+type CreateSectionResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: SectionEntity
+}
+
+type FindAllSectionsByManagerResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: SectionsEntity
+}
+
+type FindOneSectionResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: SectionEntity
+}
+
+type FindOneSectionByCodeResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: SectionEntity
+}
+
+type UpdateSectionResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: SectionEntity
+}
+
+type ActivationToggleSectionResponse implements BaseResponse {
+  service: String!
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  code: String!
+  data: SectionEntity
 }
 
 type CreateUserProfileResponse implements BaseResponse {
@@ -357,6 +439,9 @@ type Query {
   findAllBusinesses(dto: FindAllBusinessesInput!): FindAllBusinessesResponse!
   findOneBusiness(dto: FindOneBusinessInput!): FindOneBusinessResponse!
   findOneBusinessBySlug(dto: FindOneBusinessBySlugInput!): FindOneBusinessBySlugResponse!
+  findAllSectionsByManager(dto: FindAllSectionsByManagerInput!): FindAllSectionsByManagerResponse!
+  findOneSection(dto: FindOneSectionInput!): FindOneSectionResponse!
+  findOneSectionByCode(dto: FindOneSectionByCodeInput!): FindOneSectionByCodeResponse!
 }
 
 input FindAllUserProfilesInput {
@@ -399,6 +484,20 @@ input FindOneBusinessBySlugInput {
   slug: String!
 }
 
+input FindAllSectionsByManagerInput {
+  page: Int
+  limit: Int
+  name: String
+}
+
+input FindOneSectionInput {
+  id: Int!
+}
+
+input FindOneSectionByCodeInput {
+  code: String!
+}
+
 type Mutation {
   createUserProfile(dto: CreateProfileInput!): CreateUserProfileResponse!
   updateUserProfile(dto: UpdateUserProfileInput!): UpdateUserProfileResponse!
@@ -412,6 +511,9 @@ type Mutation {
   createEmployee(dto: CreateEmployeeInput!): CreateEmployeeResponse!
   promoteEmployeeToManager(dto: PromoteEmployeeToManagerInput!): PromoteEmployeeToManagerResponse!
   createBranch(dto: CreateBranchInput!): CreateBranchResponse!
+  createSection(dto: CreateSectionInput!): CreateSectionResponse!
+  updateSection(dto: UpdateSectionInput!): UpdateSectionResponse!
+  activationToggleSection(dto: ActivationToggleSectionInput!): ActivationToggleSectionResponse!
 }
 
 input CreateProfileInput {
@@ -500,4 +602,21 @@ input PromoteEmployeeToManagerInput {
 input CreateBranchInput {
   name: String!
   description: String!
+}
+
+input CreateSectionInput {
+  branchId: Int!
+  name: String!
+  description: String!
+}
+
+input UpdateSectionInput {
+  id: Int!
+  name: String
+  description: String
+}
+
+input ActivationToggleSectionInput {
+  id: Int!
+  isActive: Boolean!
 }
